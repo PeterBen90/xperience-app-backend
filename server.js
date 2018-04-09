@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const cors = require('cors')
 
 
 const { router: usersRouter } = require('./users');
@@ -11,7 +12,7 @@ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 mongoose.Promise = global.Promise;
 
-const { PORT, DATABASE_URL } = require('./config');
+const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
 
 const app = express();
 
@@ -19,15 +20,11 @@ const app = express();
 app.use(morgan('common'));
 
 // CORS
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
-  if (req.method === 'OPTIONS') {
-    return res.send(204);
-  }
-  next();
-});
+app.use(
+    cors({
+        origin: CLIENT_ORIGIN
+    })
+)
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
@@ -43,6 +40,10 @@ app.get('/api/protected', jwtAuth, (req, res) => {
     data: 'rosebud'
   });
 });
+
+ app.get('/api/*', (req, res) => {
+   res.json({ok: true});
+ });
 
 
 // Referenced by both runServer and closeServer. closeServer
