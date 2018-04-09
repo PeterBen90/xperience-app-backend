@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 // Schema to represent a new experience post
-const ExperienceSchema = mongoose.Schema({
+const experienceSchema = mongoose.Schema({
   id: {type: String},
   title: {type: String, required: true},
   date: {type: String, required: true},
@@ -11,6 +11,17 @@ const ExperienceSchema = mongoose.Schema({
   recommendation: {type: String, required: true},
 });
 
-const Experience = mongoose.model('Experience', ExperienceSchema);
+experienceSchema.methods.serialize = function() {
 
-module.exports = { Expense, ExperienceSchema }
+  return {
+    id: this._id,
+    title: this.title,
+    date: this.date,
+    details: this.details,
+    recommendation: this.recommendation,
+  };
+}
+
+const Experience = mongoose.model('Experience', experienceSchema);
+
+module.exports = { Experience }

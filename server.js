@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const cors = require('cors')
 
 
@@ -13,11 +14,16 @@ const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 mongoose.Promise = global.Promise;
 
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
+const { Experience } = require('./models');
 
 const app = express();
+const experienceRouter = require('./experienceRouter');
 
 // Logging
 app.use(morgan('common'));
+
+app.use(bodyParser.json());
+app.use('/experience', experienceRouter);
 
 // CORS
 app.use(
@@ -41,9 +47,6 @@ app.get('/api/protected', jwtAuth, (req, res) => {
   });
 });
 
- app.get('/api/*', (req, res) => {
-   res.json({ok: true});
- });
 
 
 // Referenced by both runServer and closeServer. closeServer
