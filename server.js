@@ -10,20 +10,19 @@ const cors = require('cors')
 
 const { router: usersRouter } = require('./users');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+const { router: experienceRouter } = require('./experienceRouter');
 
 mongoose.Promise = global.Promise;
 
 const { PORT, CLIENT_ORIGIN, DATABASE_URL } = require('./config');
-const { Experience } = require('./models');
 
 const app = express();
-const experienceRouter = require('./experienceRouter');
+
 
 // Logging
 app.use(morgan('common'));
 
 app.use(bodyParser.json());
-app.use('/experience', experienceRouter);
 
 // CORS
 app.use(
@@ -37,6 +36,7 @@ passport.use(jwtStrategy);
 
 app.use('/api/users/', usersRouter);
 app.use('/api/auth/', authRouter);
+app.use('/api/experience/', experienceRouter);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
@@ -47,6 +47,9 @@ app.get('/api/protected', jwtAuth, (req, res) => {
   });
 });
 
+ app.get('/api/*', (req, res) => {
+   res.json({ok: true});
+ });
 
 
 // Referenced by both runServer and closeServer. closeServer

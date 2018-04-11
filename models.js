@@ -11,17 +11,7 @@ const experienceSchema = mongoose.Schema({
   recommendation: {type: String, required: true},
 });
 
-experienceSchema.methods.serialize = function() {
-
-  return {
-    id: this._id,
-    title: this.title,
-    date: this.date,
-    details: this.details,
-    recommendation: this.recommendation,
-  };
-}
 
 const Experience = mongoose.model('Experience', experienceSchema);
 
-module.exports = { Experience }
+module.exports = { Experience, experienceSchema }

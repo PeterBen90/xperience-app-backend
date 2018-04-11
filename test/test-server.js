@@ -1,88 +1,108 @@
-'use strict';
+ const chai = require('chai');
+ const chaiHttp = require('chai-http');
 
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const faker = require('faker');
-const mongoose = require('mongoose');
+ const {app} = require('../server');
 
-// this makes the expect syntax available throughout
-// this module
-const expect = chai.expect;
+ const should = chai.should();
+ chai.use(chaiHttp);
 
-const { Experience } = require('../models');
-const {app, runServer, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config');
+ describe('API', function() {
 
-chai.use(chaiHttp);
+   it('should 200 on GET requests', function() {
+     return chai.request(app)
+       .get('/api/fooooo')
+       .then(function(res) {
+         res.should.have.status(200);
+         res.should.be.json;
+       });
+   });
+ });
 
-//this function is used to put random documents into the db
-function seedExperienceData() {
-  console.info('seeding experience data');
-  const seedData = [];
+// 'use strict';
 
-  for (let i=1; i<=10; i++) {
-    seedData.push(generateExperienceData());
-  }
-  // this will return a promise
-  return Experience.insertMany(seedData);
-}
+// const chai = require('chai');
+// const chaiHttp = require('chai-http');
+// const faker = require('faker');
+// const mongoose = require('mongoose');
 
-// used to generate data to put in db
-function generateExperienceRecommendation() {
-  const recommendations = [
-    'light', 'not_light'];
-  return recommendations[Math.floor(Math.random() * recommendations.length)];
-}
+// // this makes the expect syntax available throughout
+// // this module
+// const expect = chai.expect;
 
-// generate an object represnting an experience.
-function generateExperienceData() {
-  return {
-    title: faker.lorem.words(),
-    date: faker.lorem.words(),
-    details: faker.lorem.paragraph(),
-    recommendation: generateExperienceRecommendation(),
-  };
-}
+// const { Experience } = require('../models');
+// const {app, runServer, closeServer} = require('../server');
+// const {TEST_DATABASE_URL} = require('../config');
 
-function tearDownDb() {
-  console.warn('Deleting database');
-  return mongoose.connection.dropDatabase();
-}
+// chai.use(chaiHttp);
 
-describe('Experiences API resource', function() {
+// //this function is used to put random documents into the db
+// function seedExperienceData() {
+//   console.info('seeding experience data');
+//   const seedData = [];
 
-  before(function() {
-    return runServer(TEST_DATABASE_URL);
-  });
+//   for (let i=1; i<=10; i++) {
+//     seedData.push(generateExperienceData());
+//   }
+//   // this will return a promise
+//   return Experience.insertMany(seedData);
+// }
 
-  beforeEach(function() {
-    return seedExperienceData();
-  });
+// // used to generate data to put in db
+// function generateExperienceRecommendation() {
+//   const recommendations = [
+//     'Yes', 'No'];
+//   return recommendations[Math.floor(Math.random() * recommendations.length)];
+// }
 
-  afterEach(function() {
-    return tearDownDb();
-  });
+// // generate an object represnting an experience.
+// function generateExperienceData() {
+//   return {
+//     title: faker.lorem.words(),
+//     date: faker.lorem.words(),
+//     details: faker.lorem.paragraph(),
+//     recommendation: generateExperienceRecommendation(),
+//   };
+// }
 
-  after(function() {
-    return closeServer();
-  });
+// function tearDownDb() {
+//   console.warn('Deleting database');
+//   return mongoose.connection.dropDatabase();
+// }
 
-  describe('GET endpoint', function() {
+// describe('Experiences API resource', function() {
 
-    it('should return all existing experiences', function() {
+//   before(function() {
+//     return runServer(TEST_DATABASE_URL);
+//   });
 
-      let res;
-      return chai.request(app)
-        .get('/experience')
-        .then(function(_res) {
-          res = _res;
-          expect(res).to.have.status(200);
-          expect(res.body.recipes).to.have.length.of.at.least(1);
-          return Experience.count();
-        })
-        .then(function(count) {
-          expect(res.body.recipes).to.have.length(count);
-        });
-    });
-  });
-});
+//   beforeEach(function() {
+//     return seedExperienceData();
+//   });
+
+//   afterEach(function() {
+//     return tearDownDb();
+//   });
+
+//   after(function() {
+//     return closeServer();
+//   });
+
+//   describe('GET endpoint', function() {
+
+//     it('should return all existing experiences', function() {
+
+//       let res;
+//       return chai.request(app)
+//         .get('/api/experience/')
+//         .then(function(_res) {
+//           res = _res;
+//           expect(res).to.have.status(200);
+//           expect(res.body.experiences).to.have.length.of.at.least(1);
+//           return Experience.count();
+//         })
+//         .then(function(count) {
+//           expect(res.body.recipes).to.have.length(count);
+//         });
+//     });
+//   });
+// });
