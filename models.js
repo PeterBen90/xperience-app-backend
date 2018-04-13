@@ -7,6 +7,7 @@ const experienceSchema = mongoose.Schema({
   id: {type: String},
   title: {type: String, required: true},
   date: {type: String, required: true},
+  location: {type: String, required: true},
   details: {type: String, required: true},
   recommendation: {type: String, required: true},
 });

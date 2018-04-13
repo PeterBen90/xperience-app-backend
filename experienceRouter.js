@@ -33,6 +33,7 @@ router.post('/:userId', (req, res) => {
     details: req.body.details,
     recommendation: req.body.recommendation,
   }
+  console.log(experience);
 
   User.findById(req.params.userId)
     .then(user => {
@@ -42,7 +43,7 @@ router.post('/:userId', (req, res) => {
         if (err) {
           res.send(err)
         }
-        res.json(user)
+        res.json(user.experiences)
       })
     })
 })
