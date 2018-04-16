@@ -13,7 +13,7 @@ const router = express.Router();
 const jwtAuth = passport.authenticate('jwt', {session: false})
 const { User } = require('./users/models')
 
-// router.use(jwtAuth);
+router.use(jwtAuth);
 router.use(bodyParser.json());
 
 // Get user experiences
@@ -48,20 +48,20 @@ router.post('/:userId', (req, res) => {
     })
 })
 
-// router.delete('/:userId', (req, res) => {
+router.delete('/:userId', (req, res) => {
 
-//   User.findById(req.params.userId)
-//     .then(user => {
+  User.findById(req.params.userId)
+    .then(user => {
 
-//       user.exeriences.id(req.body.experienceId).remove()
+      user.experiences.id(req.body.experienceId).remove()
 
-//       user.save(err => {
-//         if (err) {
-//           res.send(err)
-//         }
-//         res.json(user.experiences)
-//       })
-//     })
-// })
+      user.save(err => {
+        if (err) {
+          res.send(err)
+        }
+        res.json(user.experiences)
+      })
+    })
+})
 
 module.exports = { router }
