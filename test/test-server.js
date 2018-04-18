@@ -59,6 +59,7 @@
 //   return {
 //     title: faker.lorem.words(),
 //     date: faker.lorem.words(),
+//     location: faker.lorem.words(),
 //     details: faker.lorem.paragraph(),
 //     recommendation: generateExperienceRecommendation(),
 //   };

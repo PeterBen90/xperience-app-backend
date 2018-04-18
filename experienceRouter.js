@@ -20,7 +20,6 @@ router.use(bodyParser.json());
 router.get('/:userId', (req, res) => {
   User.findById(req.params.userId)
     .then(user => {
-      console.log(user);
       res.json(user.experiences)
     })
 })
@@ -33,7 +32,6 @@ router.post('/:userId', (req, res) => {
     details: req.body.details,
     recommendation: req.body.recommendation,
   }
-  console.log(experience);
 
   User.findById(req.params.userId)
     .then(user => {
@@ -54,6 +52,25 @@ router.delete('/:userId', (req, res) => {
     .then(user => {
 
       user.experiences.id(req.body.experienceId).remove()
+
+      user.save(err => {
+        if (err) {
+          res.send(err)
+        }
+        res.json(user.experiences)
+      })
+    })
+})
+
+router.put('/:userId', (req, res) => {
+  User.findById(req.params.userId)
+    .then(user => {
+      const experience = user.experiences.id(req.body.experience.experienceId)
+      experience.title = req.body.experience.title
+      experience.date = req.body.experience.date
+      experience.location = req.body.experience.location
+      experience.details = req.body.experience.details
+      experience.recommendation = req.body.experience.recommendation
 
       user.save(err => {
         if (err) {
