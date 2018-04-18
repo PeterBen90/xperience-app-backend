@@ -47,10 +47,9 @@ app.get('/api/protected', jwtAuth, (req, res) => {
   });
 });
 
- app.get('/api/*', (req, res) => {
+app.get('/api/*', (req, res) => {
    res.json({ok: true});
- });
-
+});
 
 // Referenced by both runServer and closeServer. closeServer
 // assumes runServer has run and set `server` to a server object
