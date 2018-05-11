@@ -7,7 +7,7 @@ deploy:
   provider: heroku
   api_key:
     secure: 2RlUdzYHfFcmVPtX4BvJis1Cz8g7tHbjyrDSZ0fjnYB4XzPLgvQ99kTkWdBaL3EQ4d+aSE1CKnMvIXRysgk4fAYlSqan1Zt/KUM6tQVt1wZ0M0EIIjb+0Q8U0GZ2tkoQc0C6vA5opCNHgHniTZ62NPuUGrCn1kSYSiAq3nHynagTt4IR9hhHRTa/KLAA0OT9x8ITyOfwzf5ui8CW5dZTgQWlss29SnJbgFUnkOMXNCZH46N/8mJWuiJnRKyB22RfsuPBSIxl4Y3p18A8vM9WTnmQF91uM3KBqO8H6Y2bm8ffEw5AEbrJdjXxVZ+CE6VOcHLKhsu98YRvazxhI9VRpuPN+DFzN65rJTeWLMfWK8WFZWsgO0XrrZR9PLpmoK1OCAYtPWom9Y1HsLFUMkrbkUe+C6kuyCL/uNB04xYW/rd2j4YvRedYvhEWRHCrlEv5yY3s3lIw8q3fnkGbf7w7N9VXQzhe9Uk7FpgWBUfgsEU+j8VQbeRXhI16K/h7PZY0Ye1Nncg7oRViEmLkrNjRvSNOKKktWOpUTtE+32lUwH6WzW/1cIQr/KgG6kN97d5CvQA8DXb7SsheuRulJe4YDO2OWz2rtkrHdSUo2MMMhE/AtEZ/1AiBABsHKYsR+keIYx9OrqsYXQeRy3HlaM4YSE+97mJp5jtJP0fAOvF3LNQ=
-  app: obscure-mountain-54680
+  app: xperience-app-backend
   on:
     repo: PeterBen90/xperience-app-backend
 
